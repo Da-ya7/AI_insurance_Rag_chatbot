@@ -1,7 +1,7 @@
 # Insurance AI Assistant
 
 <p align="center">
-  <img src=".github/assets/banner.svg" alt="Insurance AI Assistant banner" width="100%">
+  <img src="https://raw.githubusercontent.com/Da-ya7/AI_insurance_Rag_chatbot/main/.github/assets/banner.svg" alt="Insurance AI Assistant banner" width="100%">
 </p>
 
 <p align="center">
