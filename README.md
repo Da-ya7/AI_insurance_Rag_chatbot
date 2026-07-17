@@ -9,6 +9,7 @@
   <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-0F969C?logo=fastapi&logoColor=white" alt="FastAPI"></a>
   <a href="https://www.trychroma.com/"><img src="https://img.shields.io/badge/ChromaDB-000000?logo=chroma&logoColor=white" alt="ChromaDB"></a>
   <a href="https://www.mysql.com/"><img src="https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=white" alt="MySQL"></a>
+  <a href="https://github.com/Da-ya7/AI_insurance_Rag_chatbot/actions/workflows/ci.yml"><img src="https://github.com/Da-ya7/AI_insurance_Rag_chatbot/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/github/last-commit/Da-ya7/AI_insurance_Rag_chatbot?style=flat-square" alt="Last commit">
 </p>
 

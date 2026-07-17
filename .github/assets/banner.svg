@@ -25,7 +25,7 @@
   <rect x="228" y="160" width="140" height="34" rx="17" fill="#11365E" stroke="#52E0C4" stroke-opacity="0.45"/>
   <text x="248" y="183" fill="#D7FFF7" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2">RAG ASSISTANT</text>
   <text x="228" y="256" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="68" font-weight="800">Insurance AI Assistant</text>
-  <text x="228" y="306" fill="#C7D3E0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="500">Grounded insurance Q&A with FastAPI, ChromaDB, MySQL, and PDF retrieval</text>
+  <text x="228" y="306" fill="#C7D3E0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="500">Grounded insurance Q&amp;A with FastAPI, ChromaDB, MySQL, and PDF retrieval</text>
   <g>
     <rect x="228" y="336" width="126" height="34" rx="17" fill="#102A43" stroke="#3CAEA3" stroke-opacity="0.45"/>
     <text x="254" y="358" fill="#D6FFFA" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">FastAPI</text>
