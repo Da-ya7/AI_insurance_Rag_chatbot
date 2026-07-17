@@ -10,6 +10,7 @@ __pycache__/
 coverage.xml
 vector_db/
 data/insurance_pdfs/
+data/**/*.pdf
 uploads/
 .venv/
 *.sqlite3
