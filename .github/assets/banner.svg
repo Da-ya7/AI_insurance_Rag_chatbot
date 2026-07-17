@@ -1,0 +1,45 @@
+<svg width="1600" height="500" viewBox="0 0 1600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="40" x2="1480" y2="460" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07111F"/>
+      <stop offset="0.45" stop-color="#0E1E3A"/>
+      <stop offset="1" stop-color="#145A32"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="280" y1="120" x2="1320" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#52E0C4"/>
+      <stop offset="1" stop-color="#A8FF78"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1600" height="500" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="500" rx="36" fill="url(#bg)"/>
+  <circle cx="1330" cy="104" r="140" fill="#1F7A4F" fill-opacity="0.25"/>
+  <circle cx="1450" cy="390" r="170" fill="#2A9D8F" fill-opacity="0.14"/>
+  <circle cx="230" cy="100" r="120" fill="#0B5C83" fill-opacity="0.18"/>
+  <path d="M240 392C418 318 512 268 688 268C874 268 982 348 1164 348C1286 348 1388 310 1460 266" stroke="url(#accent)" stroke-width="10" stroke-linecap="round" opacity="0.7"/>
+  <path d="M258 404C436 330 522 290 694 290C862 290 982 366 1146 366C1268 366 1372 336 1450 288" stroke="#6EE7D8" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+  <g filter="url(#shadow)">
+    <rect x="180" y="116" width="1240" height="268" rx="28" fill="#0B1528" fill-opacity="0.62" stroke="#7EE8D5" stroke-opacity="0.18"/>
+  </g>
+  <rect x="228" y="160" width="140" height="34" rx="17" fill="#11365E" stroke="#52E0C4" stroke-opacity="0.45"/>
+  <text x="248" y="183" fill="#D7FFF7" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2">RAG ASSISTANT</text>
+  <text x="228" y="256" fill="#FFFFFF" font-family="Segoe UI, Arial, sans-serif" font-size="68" font-weight="800">Insurance AI Assistant</text>
+  <text x="228" y="306" fill="#C7D3E0" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="500">Grounded insurance Q&A with FastAPI, ChromaDB, MySQL, and PDF retrieval</text>
+  <g>
+    <rect x="228" y="336" width="126" height="34" rx="17" fill="#102A43" stroke="#3CAEA3" stroke-opacity="0.45"/>
+    <text x="254" y="358" fill="#D6FFFA" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">FastAPI</text>
+  </g>
+  <g>
+    <rect x="366" y="336" width="132" height="34" rx="17" fill="#102A43" stroke="#3CAEA3" stroke-opacity="0.45"/>
+    <text x="397" y="358" fill="#D6FFFA" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">ChromaDB</text>
+  </g>
+  <g>
+    <rect x="510" y="336" width="118" height="34" rx="17" fill="#102A43" stroke="#3CAEA3" stroke-opacity="0.45"/>
+    <text x="538" y="358" fill="#D6FFFA" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">MySQL</text>
+  </g>
+  <g>
+    <rect x="640" y="336" width="120" height="34" rx="17" fill="#102A43" stroke="#3CAEA3" stroke-opacity="0.45"/>
+    <text x="669" y="358" fill="#D6FFFA" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">Groq LLM</text>
+  </g>
+</svg>
