@@ -9,6 +9,8 @@ def generate_answer(prompt: str) -> str:
     response = client.chat.completions.create(
         model=MODEL,
         messages=[{"role": "user", "content": prompt}],
+        max_completion_tokens=1024,   # was unset -> reasoning ate budget
+        reasoning_effort="low",       # skip heavy chain-of-thought, insurance QA doesn't need it
     )
     text = response.choices[0].message.content
     if not text:

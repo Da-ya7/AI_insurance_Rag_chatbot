@@ -33,8 +33,9 @@ def handle_chat(db: Session, user_id: int, question: str) -> dict:
     history = get_recent_history(db, user_id)
     plans = list_plans()
 
+   
+    plan = detect_plan(question, plans)
     search_query = f"{history[-1]['question']} {question}" if history else question
-    plan = detect_plan(search_query, plans)
 
     chunks = similarity_search(search_query, plan=plan)
     prompt = build_prompt(question, chunks, history)

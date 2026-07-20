@@ -36,10 +36,14 @@ def _format_context(chunks: list[dict]) -> str:
     for i, c in enumerate(chunks, 1):
         src = c["metadata"].get("source", "unknown")
         page = c["metadata"].get("page", "?")
-        text = c["text"][:350]  # cap per-chunk length to stay under token limits
+        text = c["text"]
+        cap = 900
+        if len(text) > cap:
+            truncated = text[:cap]
+            last_period = truncated.rfind(". ")
+            text = truncated[:last_period + 1] if last_period > cap * 0.5 else truncated
         parts.append(f"[{i}] (source: {src}, page: {page})\n{text}")
     return "\n\n".join(parts)
-
 
 def build_prompt(question: str, chunks: list[dict], history: list[dict] | None = None) -> str:
     history = history or []

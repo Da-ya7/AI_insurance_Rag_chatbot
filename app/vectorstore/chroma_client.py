@@ -46,8 +46,18 @@ def similarity_search(query: str, top_k: int = None, plan: str = None) -> list[d
     docs = results.get("documents", [[]])[0]
     metas = results.get("metadatas", [[]])[0]
     dists = results.get("distances", [[]])[0]
-    return [{"text": d, "metadata": m, "distance": dist} for d, m, dist in zip(docs, metas, dists)]
 
+    if not docs and where_filter:
+        # plan filter guessed wrong -> retry unfiltered instead of starving retrieval
+        results = collection.query(
+            query_embeddings=[query_embedding],
+            n_results=top_k,
+        )
+        docs = results.get("documents", [[]])[0]
+        metas = results.get("metadatas", [[]])[0]
+        dists = results.get("distances", [[]])[0]
+
+    return [{"text": d, "metadata": m, "distance": dist} for d, m, dist in zip(docs, metas, dists)]
 
 def list_plans() -> list[str]:
     """All distinct plan names currently indexed, for matching against questions."""
