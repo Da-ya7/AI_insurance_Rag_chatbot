@@ -15,6 +15,7 @@ class SourceChunk(BaseModel):
 
 
 class ChatResponse(BaseModel):
+    chat_id: int
     answer: str
     sources: list[SourceChunk]
 
