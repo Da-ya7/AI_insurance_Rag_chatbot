@@ -26,6 +26,13 @@
       </button>
 
       <div class="rail-footer">
+        <div id="user-panel" class="user-panel">
+          <span id="user-panel-label" class="user-panel__label">Guest mode</span>
+          <p id="user-name" class="user-panel__name">Log in or sign up to keep your chat history tied to an account.</p>
+          <div class="user-panel__actions">
+            <button id="logout-btn" class="logout-btn" type="button">Logout</button>
+          </div>
+        </div>
         <label class="upload-btn" for="doc-upload">
           <span class="upload-icon">＋</span>
           <span>Upload policy PDF</span>
@@ -43,24 +50,83 @@
         </div>
       </header>
 
-      <div id="chat-window" class="chat-window">
-        <div class="welcome">
-          <p class="welcome-eyebrow">Start here</p>
-          <h2>What would you like to know?</h2>
-          <div class="suggestions">
-            <button class="suggestion" type="button">What is term insurance?</button>
-            <button class="suggestion" type="button">What's the difference between term and whole life?</button>
-            <button class="suggestion" type="button">How is a premium calculated?</button>
+      <section id="auth-panel" class="auth-panel">
+        <div class="auth-card">
+          <div class="auth-copy">
+            <p class="welcome-eyebrow">Secure access</p>
+            <h2>Sign in to continue</h2>
+            <p class="auth-copy-text">Create an account or log in to keep your coverage questions tied to your profile and chat history.</p>
+            <div class="auth-points">
+              <div class="auth-point">
+                <span class="auth-point-label">Policy aware</span>
+                <span class="auth-point-text">Answers stay grounded in the uploaded insurance documents.</span>
+              </div>
+              <div class="auth-point">
+                <span class="auth-point-label">Conversation memory</span>
+                <span class="auth-point-text">Your questions continue from the same user account.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="auth-panel__form">
+            <div class="auth-tabs" role="tablist" aria-label="Authentication mode">
+              <button id="login-tab" class="auth-tab is-active" type="button" data-mode="login" aria-selected="true">Login</button>
+              <button id="signup-tab" class="auth-tab" type="button" data-mode="signup" aria-selected="false">Sign up</button>
+            </div>
+
+            <form id="login-form" class="auth-form is-active">
+              <label class="auth-field">
+                <span>Email</span>
+                <input id="login-email" type="email" autocomplete="email" required />
+              </label>
+              <label class="auth-field">
+                <span>Password</span>
+                <input id="login-password" type="password" autocomplete="current-password" required />
+              </label>
+              <button type="submit" class="auth-submit">Login</button>
+            </form>
+
+            <form id="signup-form" class="auth-form">
+              <label class="auth-field">
+                <span>Name</span>
+                <input id="signup-name" type="text" autocomplete="name" required />
+              </label>
+              <label class="auth-field">
+                <span>Email</span>
+                <input id="signup-email" type="email" autocomplete="email" required />
+              </label>
+              <label class="auth-field">
+                <span>Password</span>
+                <input id="signup-password" type="password" autocomplete="new-password" minlength="6" required />
+              </label>
+              <button type="submit" class="auth-submit">Create account</button>
+            </form>
+
+            <p id="auth-status" class="auth-status" aria-live="polite"></p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <form id="chat-form" class="composer">
-        <input id="question" type="text" placeholder="Ask about your policy..." autocomplete="off" required />
-        <button type="submit" class="send-btn" aria-label="Send">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h11M8 2l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </form>
+      <div id="chat-app" class="chat-app">
+        <div id="chat-window" class="chat-window">
+          <div class="welcome">
+            <p class="welcome-eyebrow">Start here</p>
+            <h2>What would you like to know?</h2>
+            <div class="suggestions">
+              <button class="suggestion" type="button">What is insurance?</button>
+              <button class="suggestion" type="button">what is policy?</button>
+              <button class="suggestion" type="button">How do I file a claim?</button>
+            </div>
+          </div>
+        </div>
+
+        <form id="chat-form" class="composer">
+          <input id="question" type="text" placeholder="Ask about your policy..." autocomplete="off" required />
+          <button type="submit" class="send-btn" aria-label="Send">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h11M8 2l6 6-6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+      </div>
     </main>
 
   </div>

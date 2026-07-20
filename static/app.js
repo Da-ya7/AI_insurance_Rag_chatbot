@@ -1,13 +1,128 @@
-const USER_ID = 1; // demo user
+const AUTH_STORAGE_KEY = "insurance-ai-user";
 
 const form = document.getElementById("chat-form");
 const input = document.getElementById("question");
 const chatWindow = document.getElementById("chat-window");
+const chatApp = document.getElementById("chat-app");
+const authPanel = document.getElementById("auth-panel");
 const newChatBtn = document.getElementById("new-chat");
 const uploadInput = document.getElementById("doc-upload");
 const uploadStatus = document.getElementById("upload-status");
+const loginTab = document.getElementById("login-tab");
+const signupTab = document.getElementById("signup-tab");
+const loginForm = document.getElementById("login-form");
+const signupForm = document.getElementById("signup-form");
+const loginEmail = document.getElementById("login-email");
+const loginPassword = document.getElementById("login-password");
+const signupName = document.getElementById("signup-name");
+const signupEmail = document.getElementById("signup-email");
+const signupPassword = document.getElementById("signup-password");
+const authStatus = document.getElementById("auth-status");
+const logoutBtn = document.getElementById("logout-btn");
+const userPanelLabel = document.getElementById("user-panel-label");
+const userName = document.getElementById("user-name");
 
 const WELCOME_HTML = chatWindow.innerHTML;
+
+let currentUser = loadStoredUser();
+
+function loadStoredUser() {
+  try {
+    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (err) {
+    return null;
+  }
+}
+
+function storeUser(user) {
+  currentUser = user;
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+}
+
+function clearStoredUser() {
+  currentUser = null;
+  localStorage.removeItem(AUTH_STORAGE_KEY);
+}
+
+function setAuthStatus(message, kind = "") {
+  authStatus.textContent = message;
+  authStatus.className = kind ? `auth-status ${kind}` : "auth-status";
+}
+
+function setAuthMode(mode) {
+  const isLogin = mode === "login";
+  loginTab.classList.toggle("is-active", isLogin);
+  signupTab.classList.toggle("is-active", !isLogin);
+  loginTab.setAttribute("aria-selected", String(isLogin));
+  signupTab.setAttribute("aria-selected", String(!isLogin));
+  loginForm.classList.toggle("is-active", isLogin);
+  signupForm.classList.toggle("is-active", !isLogin);
+  setAuthStatus("");
+}
+
+function setUserPanel() {
+  const isSignedIn = Boolean(currentUser);
+  newChatBtn.disabled = !isSignedIn;
+  logoutBtn.hidden = !isSignedIn;
+  userPanelLabel.textContent = isSignedIn ? "Signed in" : "Guest mode";
+  userName.textContent = isSignedIn
+    ? `${currentUser.name} · ${currentUser.email}`
+    : "Log in or sign up to keep your chat history tied to an account.";
+}
+
+function showAuthView() {
+  authPanel.classList.remove("is-hidden");
+  chatApp.classList.add("is-hidden");
+  chatWindow.innerHTML = WELCOME_HTML;
+  input.value = "";
+  setUserPanel();
+}
+
+function showChatView() {
+  authPanel.classList.add("is-hidden");
+  chatApp.classList.remove("is-hidden");
+  setUserPanel();
+}
+
+function applyAuthState() {
+  if (currentUser) {
+    showChatView();
+  } else {
+    showAuthView();
+  }
+}
+
+async function submitAuth(endpoint, payload, submitButton, successMessage) {
+  submitButton.disabled = true;
+  setAuthStatus("Signing in...", "");
+
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.detail || "Authentication failed");
+    }
+
+    storeUser(data);
+    setUserPanel();
+    showChatView();
+    setAuthStatus(successMessage, "is-success");
+  } catch (err) {
+    setAuthStatus(err.message || "Authentication failed", "is-error");
+  } finally {
+    submitButton.disabled = false;
+  }
+}
+
+applyAuthState();
+setAuthMode("login");
+setUserPanel();
 
 function clearWelcome() {
   const welcome = chatWindow.querySelector(".welcome");
@@ -121,6 +236,40 @@ chatWindow.addEventListener("click", (e) => {
   }
 });
 
+loginTab.addEventListener("click", () => setAuthMode("login"));
+signupTab.addEventListener("click", () => setAuthMode("signup"));
+
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  await submitAuth(
+    "/api/login",
+    { email: loginEmail.value.trim(), password: loginPassword.value },
+    loginForm.querySelector(".auth-submit"),
+    `Welcome back, ${loginEmail.value.trim()}.`
+  );
+});
+
+signupForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  await submitAuth(
+    "/api/signup",
+    {
+      name: signupName.value.trim(),
+      email: signupEmail.value.trim(),
+      password: signupPassword.value,
+    },
+    signupForm.querySelector(".auth-submit"),
+    `Account created for ${signupName.value.trim()}.`
+  );
+});
+
+logoutBtn.addEventListener("click", () => {
+  clearStoredUser();
+  setAuthMode("login");
+  applyAuthState();
+  setAuthStatus("Signed out.", "is-success");
+});
+
 async function submitFeedback(chatId, rating) {
   try {
     await fetch("/api/feedback", {
@@ -135,6 +284,12 @@ async function submitFeedback(chatId, rating) {
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  if (!currentUser) {
+    setAuthMode("login");
+    setAuthStatus("Please log in to send a message.", "is-error");
+    showAuthView();
+    return;
+  }
   const question = input.value.trim();
   if (!question) return;
   addUserMsg(question);
@@ -145,7 +300,7 @@ form.addEventListener("submit", async (e) => {
     const res = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: USER_ID, question }),
+      body: JSON.stringify({ user_id: currentUser.id, question }),
     });
     if (!res.ok) throw new Error("Request failed");
     const data = await res.json();
@@ -156,6 +311,12 @@ form.addEventListener("submit", async (e) => {
 });
 
 newChatBtn.addEventListener("click", () => {
+  if (!currentUser) {
+    setAuthMode("login");
+    setAuthStatus("Please log in to start a conversation.", "is-error");
+    showAuthView();
+    return;
+  }
   chatWindow.innerHTML = WELCOME_HTML;
 });
 
